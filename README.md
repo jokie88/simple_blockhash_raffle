@@ -16,7 +16,7 @@ Limitations:
 - read more [here](https://ethereum.stackexchange.com/questions/94945/can-we-use-block-hash-as-verifiable-randomness-for-the-off-chain-lottery)
 
 
-### [Simple Blockhash Raffle Tool](/blockhash_raffle.html)
+### [Simple Blockhash Raffle Tool](https://jokie88.github.io/simple_blockhash_raffle/blockhash_raffle.html)
 
 
 [View Source on Github](https://github.com/jokie88/simple_blockhash_raffle/)
