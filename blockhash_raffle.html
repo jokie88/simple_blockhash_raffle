@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Number Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    input[type="number"] {
+      padding: 8px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    p {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Number Generator</h1>
+  <p>This tool generates a random number between a specified range, based on a provided Bitcoin block hash. It can be used for provably fair random drawings by agreeing on a future block hash beforehand.</p>
+
+  <label for="blockhash">Bitcoin Block Hash:</label>
+  <input type="text" id="blockhash" placeholder="Enter Bitcoin Block Hash">
+  <br><br>
+  <label for="startNumber">Start Number:</label>
+  <input type="number" id="startNumber" placeholder="Enter Start Number" value="1">
+  <br><br>
+  <label for="maxNumber">Maximum Number:</label>
+  <input type="number" id="maxNumber" placeholder="Enter Maximum Number">
+  <br><br>
+  <button onclick="generateRandomNumber()">Generate Random Number</button>
+  <br><br>
+  <p id="result"></p>
+  <p id="warning"></p>
+
+  <script>
+    function generateRandomNumber() {
+      const blockhash = document.getElementById("blockhash").value;
+      const startNumber = parseInt(document.getElementById("startNumber").value);
+      const maxNumber = parseInt(document.getElementById("maxNumber").value);
+
+      if (!blockhash || isNaN(startNumber) || isNaN(maxNumber) || startNumber >= maxNumber) {
+        alert("Please enter a valid Bitcoin Block Hash, Start Number, and Maximum Number (Start Number must be less than Maximum Number).");
+        return;
+      }
+
+      const randomNumber = getRandomNumber(blockhash, startNumber, maxNumber);
+      const resultElement = document.getElementById("result");
+      resultElement.textContent = `Random Number: ${randomNumber}`;
+
+      const warningElement = document.getElementById("warning");
+      if (maxNumber > 1000000) {
+        warningElement.textContent = "Warning: The maximum number is larger than 1,000,000. The distribution may not be uniform for such a large range.";
+      } else {
+        warningElement.textContent = "";
+      }
+    }
+
+    function getRandomNumber(blockhash, startNumber, maxNumber) {
+      const encoder = new TextEncoder();
+      const hashBytes = encoder.encode(blockhash);
+      const hashHex = Array.from(hashBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+      const hashInt = BigInt(`0x${hashHex}`);
+      const randomNumber = Number((hashInt % BigInt(maxNumber - startNumber + 1)) + BigInt(startNumber));
+      return randomNumber;
+    }
+  </script>
+</body>
+</html>
