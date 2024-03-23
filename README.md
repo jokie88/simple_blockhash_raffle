@@ -14,3 +14,6 @@ Limitations:
 - Raffle is inconsequential enough that miners do not have an incentive to try to tip the scales by witholding blocks
 - the range is small enough (lets say under several million items) that the 
 - read more [here](https://ethereum.stackexchange.com/questions/94945/can-we-use-block-hash-as-verifiable-randomness-for-the-off-chain-lottery)
+
+
+### [Simple Blockhash Raffle Tool](/blockhash_raffle.html)
